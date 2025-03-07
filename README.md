@@ -31,7 +31,6 @@ A command-line library management system that handles user authentication, book 
 
 - C++17 compatible compiler (g++ recommended)
 - Standard C++ Library
-- sudo access (for CLI tool installation)
 
 ## Project Structure
 
@@ -61,7 +60,6 @@ The system comes pre-populated with:
 
 ## Installation
 
-### Basic Installation
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/library-management-system.git
@@ -73,20 +71,10 @@ The system comes pre-populated with:
    g++ -std=c++17 -Wall -I./include src/*.cpp -o bin/library_system
    ```
 
-### CLI Tool Installation (Optional)
-To use the program as a CLI tool (run from anywhere using `libsys`):
-
-1. Create a symbolic link (requires sudo access):
+3. Run the program:
    ```bash
-   sudo ln -sf "$(pwd)/bin/library_system" /usr/local/bin/libsys
+   ./bin/library_system
    ```
-
-2. Now you can run the program from anywhere using:
-   ```bash
-   libsys
-   ```
-
-Note: The program must remain in its original location after creating the symbolic link.
 
 ## Usage
 
