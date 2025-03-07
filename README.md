@@ -31,6 +31,7 @@ A command-line library management system that handles user authentication, book 
 
 - C++17 compatible compiler (g++ recommended)
 - Standard C++ Library
+- sudo access (for CLI tool installation)
 
 ## Project Structure
 
@@ -58,8 +59,9 @@ The system comes pre-populated with:
 - 10+ books across various genres
 - Each book includes complete details (title, author, publisher, year, ISBN)
 
-## Build Instructions
+## Installation
 
+### Basic Installation
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/library-management-system.git
@@ -71,10 +73,20 @@ The system comes pre-populated with:
    g++ -std=c++17 -Wall -I./include src/*.cpp -o bin/library_system
    ```
 
-3. Run the program:
+### CLI Tool Installation (Optional)
+To use the program as a CLI tool (run from anywhere using `libsys`):
+
+1. Create a symbolic link (requires sudo access):
    ```bash
-   ./bin/library_system
+   sudo ln -sf "$(pwd)/bin/library_system" /usr/local/bin/libsys
    ```
+
+2. Now you can run the program from anywhere using:
+   ```bash
+   libsys
+   ```
+
+Note: The program must remain in its original location after creating the symbolic link.
 
 ## Usage
 
@@ -136,7 +148,7 @@ The system uses CSV files for data storage in the bin directory:
    ```
    UserID,Role,Name,Password,Fines,BORROWED:ISBN1;ISBN2...,HISTORY:ISBN;BorrowDate;DueDate;ReturnDate;Returned;...
    ```
-   - Pre-populated with initial users (1 Librarian, 5 Students, 3 Faculty)
+   - Pre-populated with initial users (1 Admin, 1 Librarian, 5 Students, 3 Faculty)
 
 ## Error Handling
 
