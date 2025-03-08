@@ -181,7 +181,7 @@ void Library::saveUsers() {
     file.close();
 }
 
-bool Library::login(string userId, string password) {
+bool Library::login(const string& userId, const string& password) {
     for(User* user : users) {
         if(user->getUserId() == userId && user->checkPassword(password)) {
             currentUser = user;
@@ -202,8 +202,9 @@ void Library::saveData() {
 
 const vector<Book*>& Library::getBooks() const { return books; }
 vector<Book*>& Library::getBooks() { return books; }
+const vector<User*>& Library::getUsers() const { return users; }
 vector<User*>& Library::getUsers() { return users; }
-User* Library::getCurrentUser() { return currentUser; }
+User* Library::getCurrentUser() const { return currentUser; }
 
 void Library::displayBorrowingHistory(const Library& lib) const {
     if (currentUser) {

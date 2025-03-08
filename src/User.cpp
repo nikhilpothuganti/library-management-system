@@ -442,6 +442,7 @@ bool isValidISBN13(const string& isbn, const vector<Book*>& books) {
         if(book->getISBN() == isbn) return false;
     }
     
+    return true;
 }
 
 void Librarian::displayMenu(Library& lib) {

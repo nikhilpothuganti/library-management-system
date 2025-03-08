@@ -1,152 +1,171 @@
 # Library Management System
 
-A command-line library management system that handles user authentication, book management, and borrowing operations.
+A robust command-line library management system implemented in C++ that handles user authentication, book management, and borrowing operations with role-based access control.
 
 ## Features
 
-- User Management
-  - Multiple user roles (Admin, Librarian, Member)
-  - User authentication and authorization
-  - Fine tracking for overdue books
-  - User history tracking
+### User Management
+- **Multiple User Roles**
+  - Students (can borrow up to 3 books for 15 days)
+  - Faculty (can borrow up to 5 books for 30 days)
+  - Librarian (manages books and users)
+- **Authentication & Authorization**
+  - Secure password-based login
+  - Role-specific access control
+  - Session management
+- **Account Management**
+  - Fine tracking for overdue books (₹10 per day)
+  - Borrowing history
+  - Current borrowed books tracking
 
-- Book Management
-  - Add, remove, and update books
-  - Search books by title, author, or ISBN
-  - Track book status (Available, Borrowed, Reserved)
-  - Book details including title, author, publisher, year, and ISBN
+### Book Management
+- **Comprehensive Book Information**
+  - Title, Author, Publisher
+  - Publication Year
+  - ISBN (13-digit validation)
+  - Status tracking (Available/Borrowed)
+- **Book Operations**
+  - Add new books (Librarian)
+  - Remove books (Librarian)
+  - View all books
+  - View available books
+  - View borrowed books
 
-- Borrowing System
-  - Borrow and return books
-  - Automatic due date calculation
-  - Fine calculation for overdue books
-  - Book reservation system
+### Borrowing System
+- **Smart Borrowing Rules**
+  - Student: 3 books, 15 days
+  - Faculty: 5 books, 30 days
+  - Automatic fine calculation
+  - Due date tracking
+- **Return Processing**
+  - Status updates
+  - Fine calculation
+  - History recording
 
-- Data Persistence
-  - CSV-based storage for books and users
-  - Automatic data saving
-  - Data validation and error handling
-
-## Prerequisites
-
-- C++17 compatible compiler (g++ recommended)
-- Standard C++ Library
-
-## Project Structure
-
-```
-library-management-system/
-├── include/             # Header files
-├── src/                # Source files
-├── bin/                # Data files
-│   ├── books.csv      # Pre-populated with 10+ books
-│   └── users.csv      # Pre-populated with initial users
-└── README.md          # This file
-```
-
-## Initial Data
-
-The system comes pre-populated with:
-
-### Users
-- 1 Administrator
-- 1 Librarian
-- 5 Students
-- 3 Faculty members
-
-### Books
-- 10+ books across various genres
-- Each book includes complete details (title, author, publisher, year, ISBN)
+### Data Persistence
+- **CSV-Based Storage**
+  - books.csv: Book inventory
+  - users.csv: User accounts and history
+- **Data Format**
+  - Books: Title,Author,Publisher,Year,ISBN,Status
+  - Users: UserID,Role,Name,Password,Fines,BORROWED:books,HISTORY:records
 
 ## Installation
 
-1. Clone the repository:
+### Prerequisites
+- C++17 compatible compiler
+- Terminal/Command Prompt
+
+### Building from Source
+1. Compile the program:
    ```bash
-   git clone https://github.com/yourusername/library-management-system.git
-   cd library-management-system
+   g++ -std=c++17 -I./include src/*.cpp -o bin/library_system
    ```
 
-2. Compile the program:
-   ```bash
-   g++ -std=c++17 -Wall -I./include src/*.cpp -o bin/library_system
-   ```
-
-3. Run the program:
+2. Run the program:
    ```bash
    ./bin/library_system
    ```
 
-## Usage
+## Usage Guide
 
-### Sample Login Credentials
+### Login Credentials
 
-1. Admin:
-   - Username: admin
+1. **Student Accounts**
+   - Format: S### (e.g., S001)
+   - Default password: pass123
+   - Example: S001/pass123
+
+2. **Faculty Accounts**
+   - Format: F### (e.g., F001)
+   - Default password: pass123
+   - Example: F001/pass123
+
+3. **Librarian Account**
+   - ID: L001
    - Password: admin123
 
-2. Librarian:
-   - Username: librarian
-   - Password: lib123
+### Menu System
 
-3. Member:
-   - Username: member
-   - Password: member123
+#### Student Menu
+1. View All Books
+2. View Available Books
+3. View My Borrowed Books
+4. Borrow Book
+5. Return Book
+6. View Fines
+7. Pay Fines
+8. View Borrowing History
+9. Logout
 
-### User Interface
+#### Faculty Menu
+1. View All Books
+2. View Available Books
+3. View My Borrowed Books
+4. Borrow Book
+5. Return Book
+6. View Borrowing History
+7. Logout
 
-The system provides different menus based on user roles:
+#### Librarian Menu
+1. Add Book
+2. Remove Book
+3. View All Books
+4. View All Users
+5. Add User
+6. Remove User
+7. Logout
 
-1. Admin Menu:
-   - Manage users (add, remove, update)
-   - View all users
-   - Manage books
-   - View all books
-   - View borrowing history
-   - Logout
+### Sample Books
+The system comes pre-populated with classic literature:
+- Jane Eyre
+- The Lord of the Rings
+- Wuthering Heights
+- The Odyssey
+- Don Quixote
+- Moby Dick
+- The Divine Comedy
+- War and Peace
+- Les Miserables
+- The Count of Monte Cristo
 
-2. Librarian Menu:
-   - Manage books (add, remove, update)
-   - View all books
-   - View available books
-   - View borrowed books
-   - View borrowing history
-   - Logout
+### Project Structure
+```
+library-management-system/
+├── include/
+│   ├── Account.h
+│   ├── Book.h
+│   ├── Library.h
+│   ├── User.h
+│   └── Utils.h
+├── src/
+│   ├── Account.cpp
+│   ├── Book.cpp
+│   ├── Library.cpp
+│   ├── User.cpp
+│   ├── Utils.cpp
+│   └── main.cpp
+├── bin/
+│   ├── books.csv
+│   └── users.csv
+└── README.md
+```
 
-3. Member Menu:
-   - View all books
-   - View available books
-   - View borrowed books
-   - Borrow a book
-   - Return a book
-   - View borrowing history
-   - Logout
+### Class Hierarchy
+- **Library**: Main system controller
+- **User**: Base class for all users
+  - Student: Limited borrowing privileges
+  - Faculty: Extended borrowing privileges
+  - Librarian: Administrative privileges
+- **Book**: Book information and status
+- **Account**: Borrowing records and fines
+- **Utils**: Helper functions for UI
 
-## Data Storage
-
-The system uses CSV files for data storage in the bin directory:
-
-1. `bin/books.csv`:
-   ```
-   Title,Author,Publisher,Year,ISBN,Status
-   ```
-   - Status: 0 (Available), 1 (Borrowed), 2 (Reserved)
-   - Pre-populated with 10+ books
-
-2. `bin/users.csv`:
-   ```
-   UserID,Role,Name,Password,Fines,BORROWED:ISBN1;ISBN2...,HISTORY:ISBN;BorrowDate;DueDate;ReturnDate;Returned;...
-   ```
-   - Pre-populated with initial users (1 Admin, 1 Librarian, 5 Students, 3 Faculty)
-
-## Error Handling
-
-The system includes comprehensive error handling for:
-- Invalid user credentials
-- Book availability issues
-- Fine calculation
-- Data validation
-- File operations
+### Error Handling
+- File I/O error handling
+- Invalid input handling
+- Data validation errors
+- Runtime error handling
 
 ## Author
-
 Nikhil Pothuganti

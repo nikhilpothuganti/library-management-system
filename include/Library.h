@@ -14,26 +14,34 @@ private:
     std::vector<User*> users;
     User* currentUser;
 
+    // File operations
     void loadBooksFromCSV();
     void loadUsersFromCSV();
     void saveBooks();
     void saveUsers();
     
 public:
+    // Constructors & Destructor
     Library();
     ~Library();
 
-    bool login(std::string userId, std::string password);
+    // Authentication
+    bool login(const std::string& userId, const std::string& password);
     void logout();
+
+    // Data persistence
     void saveData();
 
     // Getters
-    const std::vector<Book*>& getBooks() const;
-    std::vector<Book*>& getBooks();
-    std::vector<User*>& getUsers();
-    User* getCurrentUser();
+    const std::vector<Book*>& getBooks() const;    // For read-only access
+    std::vector<Book*>& getBooks();                // For modification access
+    const std::vector<User*>& getUsers() const;    // For read-only access
+    std::vector<User*>& getUsers();                // For modification access
+    User* getCurrentUser() const;
 
+    // Menu
     void mainMenu();
+
     void displayBorrowingHistory(const Library& lib) const;
 };
 

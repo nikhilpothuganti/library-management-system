@@ -19,23 +19,24 @@ private:
     BookStatus status;
 
 public:
-    Book(std::string t = "", std::string a = "", std::string p = "", int y = 0, std::string isbn = "");
+    Book(const std::string& t = "", const std::string& a = "", const std::string& p = "", 
+         int y = 0, const std::string& isbn = "");
     
     // Getters
-    std::string getISBN() const;
-    std::string getAuthor() const;
-    std::string getPublisher() const;
+    const std::string& getISBN() const;
+    const std::string& getAuthor() const;
+    const std::string& getPublisher() const;
     int getYear() const;
-    std::string getTitle() const;
+    const std::string& getTitle() const;
     BookStatus getStatus() const;
 
     // Setters
     void setStatus(BookStatus s);
-    void setTitle(std::string t);
-    void setAuthor(std::string a);
-    void setPublisher(std::string p);
+    void setTitle(const std::string& t);
+    void setAuthor(const std::string& a);
+    void setPublisher(const std::string& p);
     void setYear(int y);
-    void setISBN(std::string i);
+    void setISBN(const std::string& i);
 
     void display() const;
 };
