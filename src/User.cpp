@@ -415,6 +415,35 @@ void Faculty::displayMenu(Library& lib) {
     }
 }
 
+// Add these validation functions before the Librarian::displayMenu implementation
+bool isValidUserId(const string& id, const vector<User*>& users) {
+    // Check format
+    if(id[0] != 'S' && id[0] != 'F') return false;
+    
+    // Check if ID already exists
+    for(const User* user : users) {
+        if(user->getUserId() == id) return false;
+    }
+    
+    return true;
+}
+
+bool isValidISBN13(const string& isbn, const vector<Book*>& books) {
+    // Check length
+    if(isbn.length() != 13) return false;
+    
+    // Check if all characters are digits
+    for(char c : isbn) {
+        if(!isdigit(c)) return false;
+    }
+    
+    // Check if ISBN already exists
+    for(const Book* book : books) {
+        if(book->getISBN() == isbn) return false;
+    }
+    
+}
+
 void Librarian::displayMenu(Library& lib) {
     while(true) {
         cout << "\nLibrarian Menu - " << name << "\n"
@@ -442,7 +471,15 @@ void Librarian::displayMenu(Library& lib) {
                 cout << "Publisher: "; getline(cin, publisher);
                 cout << "Year: "; cin >> year;
                 cin.ignore();
-                cout << "ISBN: "; getline(cin, isbn);
+                
+                do {
+                    cout << "ISBN (13 digits): "; getline(cin, isbn);
+                    if(!isValidISBN13(isbn, lib.getBooks())) {
+                        cout << "Invalid ISBN. Please ensure:\n";
+                        cout << "- ISBN is exactly 13 digits\n";
+                        cout << "- ISBN is not already in the system\n";
+                    }
+                } while(!isValidISBN13(isbn, lib.getBooks()));
 
                 lib.getBooks().push_back(new Book(title, author, publisher, year, isbn));
                 cout << "Book added successfully.\n";
@@ -517,8 +554,17 @@ void Librarian::displayMenu(Library& lib) {
             case 5: {
                 string id, password, name;
                 cout << "Enter user details:\n";
-                cout << "ID (S### for Student, F### for Faculty): "; 
-                getline(cin, id);
+                
+                do {
+                    cout << "ID (S### for Student, F### for Faculty): "; 
+                    getline(cin, id);
+                    if(!isValidUserId(id, lib.getUsers())) {
+                        cout << "Invalid user ID. Please ensure:\n";
+                        cout << "- ID starts with 'S' for Student or 'F' for Faculty\n";
+                        cout << "- ID is not already in use\n";
+                    }
+                } while(!isValidUserId(id, lib.getUsers()));
+                
                 cout << "Password: "; getline(cin, password);
                 cout << "Name: "; getline(cin, name);
 

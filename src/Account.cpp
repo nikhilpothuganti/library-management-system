@@ -67,8 +67,8 @@ void Account::addBorrowedBook(Book* book, int maxDays) {
 }
 
 void Account::displayBorrowingHistory(const Library& lib) const {
-    vector<string> headers = {"Title", "ISBN", "Borrow Date", "Due Date", "Return Status"};
-    vector<int> widths = {35, 15, 25, 25, 20};
+    vector<string> headers = {"Title", "ISBN", "Borrow Date", "Due Date", "Return Date", "Status"};
+    vector<int> widths = {40, 15, 25, 25, 25, 15};
     
     printTableSeparator(widths);
     printTableRow(headers, widths);
@@ -90,11 +90,14 @@ void Account::displayBorrowingHistory(const Library& lib) const {
         strftime(dueDate, 26, "%Y-%m-%d %H:%M:%S", localtime(&record.dueDate));
         
         string returnStatus;
+        string returnDateStr;
         if(record.returned) {
             strftime(returnDate, 26, "%Y-%m-%d %H:%M:%S", localtime(&record.returnDate));
             returnStatus = "Returned";
+            returnDateStr = returnDate;
         } else {
             returnStatus = "Not returned";
+            returnDateStr = "Not returned";
         }
         
         vector<string> row = {
@@ -102,6 +105,7 @@ void Account::displayBorrowingHistory(const Library& lib) const {
             record.ISBN,
             borrowDate,
             dueDate,
+            returnDateStr,
             returnStatus
         };
         
